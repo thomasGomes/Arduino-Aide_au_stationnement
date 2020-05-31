@@ -17,8 +17,8 @@
 
 // La distance maximum que peut voir le module HC-SR04 est d'environ 4 mètres.
 #define MAX_DISTANCE 200   // Distance à laquelle la voiture commence à être detectée (en cm)
-#define PANIC_DISTANCE 30  // Distance à laquelle le Neopixel se met en warning (en cm)
-#define PARKED_DISTANCE 50 // Distance à laquelle la voiture est considérée comme garée
+#define PANIC_DISTANCE 20  // Distance à laquelle le Neopixel se met en warning (en cm)
+#define PARKED_DISTANCE 30 // Distance à laquelle la voiture est considérée comme garée
 
 #define PARK_OFF_TIMEOUT 15000 // Temps pour que le Neopixel s'éteigne après que la voiture soit garée (en miliseconde)
 
@@ -75,7 +75,7 @@ void loop()
     lastDebouncePeriod = now;
 
     // Update parked status
-    int parked = displayDist != 0 && displayDist < PARKED_DISTANCE;
+    int parked = displayDist != 0 && displayDist <= PARKED_DISTANCE;
     if (now - lastSend > sendInterval)
     {
       if (parked != oldParkedStatus)
@@ -89,11 +89,11 @@ void loop()
           Serial.println("Car Gone");
         }
         oldParkedStatus = parked;
+        lastSend = now;
       }
-      lastSend = now;
     }
 
-    if (now - lastSend > PARK_OFF_TIMEOUT)
+    if (parked && (now - lastSend > PARK_OFF_TIMEOUT))
     {
       // We've been parked for a while now. Turn off all pixels
       for (int i = 0; i < NUMPIXELS; i++)
