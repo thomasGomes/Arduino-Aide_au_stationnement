@@ -9,7 +9,7 @@
 #endif
 
 #define NEO_PIN 6       // Pin Data du Neopixel
-#define NUMPIXELS 9     // Nombre de pixels sur le Neopixel
+#define NUMPIXELS 24     // Nombre de pixels sur le Neopixel
 #define MAX_INTESITY 20 // Intensité de la luminosté (en pourcentage)
 
 #define TRIGGER_PIN 12 // Pin pour la ping TRIGGER du module HC-SR04
@@ -22,7 +22,7 @@
 
 #define PARK_OFF_TIMEOUT 15000 // Temps pour que le Neopixel s'éteigne après que la voiture soit garée (en miliseconde)
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, NEO_PIN, NEO_RGB + NEO_KHZ800);
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, NEO_PIN, NEO_GRB + NEO_KHZ800);
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 unsigned long sendInterval = 100;
